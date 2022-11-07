@@ -1,7 +1,7 @@
 #this is apps uri file we create this file for mapping of urls in our app when we request the django server
 from django.urls import path
-
 from . import views
+
 
 urlpatterns=[
 
