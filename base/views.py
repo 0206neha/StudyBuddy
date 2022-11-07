@@ -1,15 +1,22 @@
-from http.client import HTTPResponse
-from django.shortcuts import render,redirect
-from django.db.models import Q
+# from http.client import HTTPResponse
+# from django.shortcuts import render,redirect
+# from django.db.models import Q
+# from django.http import HttpResponse
+# from django.contrib import messages
+
+# from django.contrib.auth.decorators import login_required
+# from .models import Room,Topic,Message,User
+# from .forms import RoomForm,UserForm,MyUserCreationForm
+# from django.contrib.auth import authenticate,login,logout
+
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-
 from django.contrib.auth.decorators import login_required
-from .models import Room,Topic,Message,User
-from .forms import RoomForm,UserForm,MyUserCreationForm
-from django.contrib.auth import authenticate,login,logout
-
-
+from django.db.models import Q
+from django.contrib.auth import authenticate, login, logout
+from .models import Room, Topic, Message, User
+from .forms import RoomForm, UserForm, 
 # Create your views here.
 
 # rooms=[
@@ -68,7 +75,7 @@ def logoutUser(request):
     
 def home(request): # request object is the http object that shows what the user is sending
 
-    q=request.GET.get('q') if request.GET.get('q')!=None else ''
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
     rooms=Room.objects.filter(
         Q(topic__name__icontains=q) |#all the rooms in database and search by topic name (icontains)
         Q(name__icontains=q) |
@@ -80,8 +87,7 @@ def home(request): # request object is the http object that shows what the user 
 
     topics=Topic.objects.all()[0:5]
     room_count=rooms.count()
-
-    room_messages=Message.objects.filter(Q(room__topic__name__icontains=q))
+    room_messages=Message.objects.filter(Q(room__topic__name__icontains=q))[0:3]
 
     context={'rooms':rooms,'topics':topics,'room_count':room_count,'room_messages':room_messages}
     return render(request,'base/home.html',context) #when user request homepage return him "home page"
