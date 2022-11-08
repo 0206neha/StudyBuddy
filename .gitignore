@@ -1,2 +1,5 @@
 .env
 .gitignore
+[label .gitignore]
+db.sqlite3
+*.pyc
