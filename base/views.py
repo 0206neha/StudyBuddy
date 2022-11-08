@@ -85,7 +85,8 @@ def home(request): # request object is the http object that shows what the user 
         ) 
 
     topics=Topic.objects.all()[0:5]
-    room_count=rooms.count()
+    # room_count=rooms.count()
+    room_count=len(rooms)
     room_messages=Message.objects.filter(Q(room__topic__name__icontains=q))[0:3]
 
     context={'rooms':rooms,'topics':topics,'room_count':room_count,'room_messages':room_messages}
