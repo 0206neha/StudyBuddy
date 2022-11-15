@@ -33,7 +33,7 @@ def loginPage(request):
         return redirect('home')
 
     if request.method =='POST':
-        email=request.POST.get('email')
+        email=request.POST.get('email').lower()
         password=request.POST.get('password')
 
         try:
@@ -50,6 +50,10 @@ def loginPage(request):
     context={'page':page}
     return render(request,'base/login_register.html',context)
 
+
+def logoutUser(request):
+    logout(request)
+    return redirect('home')
 
 def registerPage(request):
     # page='register'
@@ -69,9 +73,7 @@ def registerPage(request):
     return render(request,'base/login_register.html',{'form':form})
 
 
-def logoutUser(request):
-    logout(request)
-    return redirect('home')
+
     
 def home(request): # request object is the http object that shows what the user is sending
 
@@ -95,7 +97,8 @@ def home(request): # request object is the http object that shows what the user 
 def room(request,pk ):
     # return HttpResponse('ROOM')
     room=Room.objects.get(id=pk)
-    room_messages=room.message_set.all().order_by('-created')#many to one relationship
+    room_messages=room.message_set.all()
+    # room_messages=room.message_set.all().order_by('-created')#many to one relationship
     participants=room.participants.all() #many to many relationship
     # for i in rooms:
     #     if i['id']==int(pk):
@@ -128,7 +131,7 @@ def userProfile(request,pk):
 def createRoom(request):
     form=RoomForm()
     topics=Topic.objects.all()
-    if request.method=='POST':
+    if request.method =='POST':
         topic_name=request.POST.get('topic')
         topic,created=Topic.objects.get_or_create(name=topic_name)
 
@@ -149,10 +152,10 @@ def updateRoom(request,pk):
     room=Room.objects.get(id=pk)
     form=RoomForm(instance=room)
     topics=Topic.objects.all()
-    if request.user!=room.host:
+    if request.user != room.host:
         return HttpResponse('You are not allowed here!!')
 
-    if request.method=='POST':
+    if request.method =='POST':
         topic_name=request.POST.get('topic')
         topic,created=Topic.objects.get_or_create(name=topic_name)
         room.name=request.POST.get('name')
