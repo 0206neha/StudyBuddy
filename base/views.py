@@ -83,15 +83,11 @@ def home(request): # request object is the http object that shows what the user 
     rooms=Room.objects.filter(
         Q(topic__name__icontains=q) |#all the rooms in database and search by topic name (icontains)
         Q(name__icontains=q) |
-        Q(description__icontains=q)
-
-        #search by topic,name,desciption
-        ) 
-
-    topics=Topic.objects.all()[0:5]
+        Q(description__icontains=q)) 
+    topics=Topic.objects.all()[:5]
     room_count=rooms.count()
     # room_count=len(rooms)
-    room_messages=Message.objects.filter(Q(room__topic__name__icontains=q))[0:3]
+    room_messages=Message.objects.filter(Q(room__topic__name__icontains=q))[:3]
 
     context={'rooms':rooms,'topics':topics,'room_count':room_count,'room_messages':room_messages}
     return render(request,'base/home.html',context) #when user request homepage return him "home page"
@@ -216,6 +212,3 @@ def topicPage(request):
 def activityPage(request):
     room_messages=Message.objects.all()
     return render(request,'base/activity.html',{'room_messages':room_messages})
-
-def news(request):
-    pass
