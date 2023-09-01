@@ -216,3 +216,6 @@ def topicPage(request):
 def activityPage(request):
     room_messages=Message.objects.all()
     return render(request,'base/activity.html',{'room_messages':room_messages})
+
+def news(request):
+    pass

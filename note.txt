@@ -2,7 +2,7 @@ To create virtual environment-pip install virtualenv
                               virtual env
                               env\scripts\activate
 Step1-Install-pip install django
-Step2-create chatroom(project) folder-django-admin startproject chatroom
+Step2-create chatroom(project) folder-django-admin startproject chatroom.,cd chatroom
 Step3-get server and get address-   python manage.py runserver
 Step4-create app-base folder-->python manage.py startapp base
 
