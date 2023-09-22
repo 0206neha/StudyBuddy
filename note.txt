@@ -32,3 +32,8 @@ implications before adding the headers, since you could be unintentionally openi
 
 Note-To get all libraries used in project
 pip freeze > requirement.txt
+
+
+
+Note as on 02/0923
+for deployment on render i have changed the django version from 3.4.1 to 3.8.2 
